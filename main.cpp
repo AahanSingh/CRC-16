@@ -23,6 +23,7 @@ string XOR(string x,string y){
 }
 
 string calc(string crc, string dw,int l){
+    string x=dw;
     //appending 16 0s
     dw.append("0000000000000000");
     string temp=dw.substr(0,17);
@@ -33,15 +34,16 @@ string calc(string crc, string dw,int l){
         temp=temp.substr(1,16);
         temp.append(dw.substr(i+17,1));
     }
-    cout<<"CRC VALUE: "<<temp;
-    return temp;
+    x.append(temp);
+    cout<<"CRC VALUE: "<<x;
+    return x;
 }
 bool check(string crcN,string crc,string dw){
     
-    int l=dw.length();
-    dw.append(crcN);
+    int l=dw.length()-crc.length();
+    //dw.append(crcN);
     string temp=dw.substr(0,17);
-    for(int i=0;i<l ;i++){
+    for(int i=0;i<=l ;i++){
         char x=temp[0];
         if(x=='1')
             temp=XOR(crc,temp);
@@ -52,11 +54,11 @@ bool check(string crcN,string crc,string dw){
         return true;
     else
         return false;
-
+    
 }
 
 int main(int argc, const char * argv[]) {
-
+    
     string crc="10001000000100001";
     string dw;
     cout<<"ENTER DATA WORD";
